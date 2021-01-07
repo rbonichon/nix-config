@@ -18,17 +18,8 @@ let
       cstuff = [ flex bison ];
       imgstuff = [ gimp inkscape ];
       office = [ libreoffice ];
-      my-python-packages = python-packages:
-        with python-packages; [
-          pandas
-          requests
-          matplotlib
-          pygments
-          jedi
-          flake8
-        ];
-      python-with-my-packages = python3.withPackages my-python-packages;
       myemacs = import ./emacs.nix { inherit pkgs; };
+      python = import ./python.nix { inherit pkgs; };
       email = import./email.nix { inherit pkgs; };
       # all-hies = import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") { };
       # my-haskell-packages = with haskellPackages; [ ghc hoogle ];
@@ -36,6 +27,7 @@ let
       # rust_stuff = [ cargo rustc ];
     in
     email ++
+    python ++
     compilers ++ # smt_provers ++
     dvcs ++ cstuff ++ browsers ++ imgstuff ++ [
       acpitool
@@ -147,7 +139,7 @@ let
       pinentry_emacs
       pkg-config
       plantuml
-      python-with-my-packages
+
       polybar
       powerstat
       powertop
