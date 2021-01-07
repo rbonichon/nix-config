@@ -14,25 +14,28 @@ let
     let
       dvcs = [ git git-lfs subversion ];
       browsers = [ firefox google-chrome-dev mesa_drivers ];
-      compilers = [ clang gcc_multi gcc9 gcc49 gcc-arm-embedded-8 go ocaml ];
+      compilers = [ clang gcc_multi go ocaml ];
       cstuff = [ flex bison ];
       imgstuff = [ gimp inkscape ];
       office = [ libreoffice ];
-      my-python-packages = python-packages: with python-packages; [
-        pandas
-        requests
-        matplotlib
-        pygments
-        jedi
-        flake8
-      ];
+      my-python-packages = python-packages:
+        with python-packages; [
+          pandas
+          requests
+          matplotlib
+          pygments
+          jedi
+          flake8
+        ];
       python-with-my-packages = python3.withPackages my-python-packages;
       myemacs = import ./emacs.nix { inherit pkgs; };
-      all-hies = import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") { };
-      my-haskell-packages = with haskellPackages; [ ghc hoogle ];
-      haskell_stuff = [ cabal-install (all-hies.selection { selector = p: p; }) ] ++ my-haskell-packages;
-      rust_stuff = [ cargo rustc ];
+      email = import./email.nix { inherit pkgs; };
+      # all-hies = import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") { };
+      # my-haskell-packages = with haskellPackages; [ ghc hoogle ];
+      # haskell_stuff = [ cabal-install (all-hies.selection { selector = p: p; }) ] ++ my-haskell-packages;
+      # rust_stuff = [ cargo rustc ];
     in
+    email ++
     compilers ++ # smt_provers ++
     dvcs ++ cstuff ++ browsers ++ imgstuff ++ [
       acpitool
@@ -98,7 +101,6 @@ let
       gocode
       imagemagick
       ispell
-      isync
       # others
       jmtpfs
       geoclue2
@@ -129,7 +131,6 @@ let
       networkmanagerapplet
       niv
       ntp
-      notmuch
       opam
       openssl
       powerline-go
@@ -193,10 +194,12 @@ let
       yubikey-personalization-gui
       zathura
       zlib
+      mumble
       zoom-us
       linuxPackages.cpupower
       linuxPackages.virtualboxGuestAdditions
-
+      starship
+      noto-fonts-emoji
     ];
 in
 packages

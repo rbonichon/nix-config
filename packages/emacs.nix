@@ -52,7 +52,7 @@ emacsWithPackages (
       multi-term
       zeal-at-point
       company
-      company-auctex
+      # company-auctex
       company-bibtex
       company-ghci
       company-go
@@ -181,10 +181,10 @@ emacsWithPackages (
       ox-reveal
       ox-pandoc
       ox-ioslide
+      ox-hugo
     ]
   ) ++ (
     with epkgs.elpaPackages; [
-      auctex # ; LaTeX mode
       undo-tree
       rainbow-mode
     ]
